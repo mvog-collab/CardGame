@@ -2,7 +2,8 @@ import java.util.List;
 
 public class AnalyseHand {
 
-    public boolean isFlush(List<PlayingCard> hand) {
+
+  public static boolean isFlush(List<PlayingCard> hand) {
       if (hand == null || hand.isEmpty()) {
         return false;
       }

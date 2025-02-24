@@ -2,18 +2,25 @@ import java.util.List;
 
 public class AnalyseHand {
 
+  private List<PlayingCard> hand;
 
-  public static boolean isFlush(List<PlayingCard> hand) {
-      if (hand == null || hand.isEmpty()) {
+  // Konstruktør
+  public AnalyseHand(List<PlayingCard> hand) {
+    this.hand = hand;
+  }
+
+  // Metode for å sjekke for flush
+  public boolean isFlush() {
+    if (hand == null || hand.isEmpty()) {
+      return false;
+    }
+    char firstSuit = hand.get(0).getSuit();
+
+    for (PlayingCard card : hand) {
+      if (card.getSuit() != firstSuit) {
         return false;
       }
-      char firstSuit = hand.get(0).getSuit();
-
-      for (PlayingCard card : hand) {
-        if (card.getSuit() != firstSuit) {
-          return false;
-        }
-      }
-      return true;
+    }
+    return true;
   }
 }

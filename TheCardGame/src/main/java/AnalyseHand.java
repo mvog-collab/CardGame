@@ -3,26 +3,26 @@ import java.util.List;
 
 public class AnalyseHand {
 
-  private List<PlayingCard> hand;
+  private static List<PlayingCard> hand;
 
   // Konstruktør
   public AnalyseHand(List<PlayingCard> hand) {
-    this.hand = hand;
+    AnalyseHand.hand = hand;
   }
 
   // Metode for å sjekke for flush
-  public boolean isFlush() {
+  public static int isFlush() {
     if (hand == null || hand.isEmpty()) {
-      return false;
+      return 0;
     }
     char firstSuit = hand.get(0).getSuit();
 
     for (PlayingCard card : hand) {
       if (card.getSuit() != firstSuit) {
-        return false;
+        return 0;
       }
     }
-    return true;
+    return 5;
   }
 
   public static int checkStraight(List<PlayingCard> hand) {
@@ -35,5 +35,4 @@ public class AnalyseHand {
     }
     return 4;  // Straight gir 4 poeng
   }
-
 }

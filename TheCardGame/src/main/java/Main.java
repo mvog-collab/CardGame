@@ -11,7 +11,7 @@ public class Main extends Application {
 
   @Override
   public void start(Stage stage) {
-    stage.setTitle("Kortspill");
+    stage.setTitle("GameOfCards");
 
     // Opprett en kortstokk og trekk 5 kort
     DeckOfCards deck = new DeckOfCards();
@@ -22,7 +22,7 @@ public class Main extends Application {
     root.setAlignment(Pos.CENTER);
     root.setStyle("-fx-padding: 20px;");
 
-    Text title = new Text("Ditt kortbord");
+    Text title = new Text("Your cards");
 
     // Vis kortene i en horisontal layout
     HBox cardBox = new HBox(15);

@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -17,11 +18,16 @@ public class Main extends Application {
     List<PlayingCard> hand = deck.dealHand(5);
 
     // Opprett en layout
-    VBox root = new VBox(10);
+    VBox root = new VBox(20);
+    root.setAlignment(Pos.CENTER);
+    root.setStyle("-fx-padding: 20px;");
+
     Text title = new Text("Ditt kortbord");
 
     // Vis kortene i en horisontal layout
-    HBox cardBox = new HBox(10);
+    HBox cardBox = new HBox(15);
+    cardBox.setAlignment(Pos.CENTER);
+
     for (PlayingCard card : hand) {
       cardBox.getChildren().add(CardRenderer.createCardImage(card));
     }

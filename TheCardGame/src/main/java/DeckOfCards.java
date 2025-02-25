@@ -10,7 +10,7 @@ public class DeckOfCards {
   public DeckOfCards() {
     this.deck = new ArrayList<PlayingCard>();
     for (char suit : suits) {
-      for (int rank = 0; rank < 13; rank++) {
+      for (int rank = 1; rank < 13; rank++) {
         deck.add(new PlayingCard(suit, rank));
       }
     }
@@ -26,7 +26,7 @@ public class DeckOfCards {
 
     List<PlayingCard> hand = new ArrayList<PlayingCard>();
     for (int i = 0; i < n; i++) {
-      hand.add(deck.get(i));
+      hand.add(deck.remove(0));
     }
     return hand;
   }

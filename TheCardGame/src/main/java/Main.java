@@ -1,34 +1,39 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.util.List;
 
 public class Main extends Application {
 
   @Override
   public void start(Stage stage) {
-    // Opprett en tekstkomponent som vises i vinduet
-    Text helloText = new Text("Hello, JavaFX!");
+    stage.setTitle("Kortspill");
 
-    // Opprett en layout (StackPane)
-    StackPane root = new StackPane();
-    root.getChildren().add(helloText);
+    // Opprett en kortstokk og trekk 5 kort
+    DeckOfCards deck = new DeckOfCards();
+    List<PlayingCard> hand = deck.dealHand(5);
 
-    // Opprett en Scene med layouten
-    Scene scene = new Scene(root, 400, 300); // 400x300 er størrelsen på vinduet
+    // Opprett en layout
+    VBox root = new VBox(10);
+    Text title = new Text("Ditt kortbord");
 
-    // Sett scenen til vinduet
+    // Vis kortene i en horisontal layout
+    HBox cardBox = new HBox(10);
+    for (PlayingCard card : hand) {
+      cardBox.getChildren().add(CardRenderer.createCardImage(card));
+    }
+
+    root.getChildren().addAll(title, cardBox);
+    Scene scene = new Scene(root, 600, 400);
     stage.setScene(scene);
-
-    // Sett tittelen på vinduet
-    stage.setTitle("JavaFX Application");
-
-    // Vis vinduet
     stage.show();
   }
 
   public static void main(String[] args) {
-    launch(args); // Start JavaFX-applikasjonen
+    launch(args);
   }
 }
+

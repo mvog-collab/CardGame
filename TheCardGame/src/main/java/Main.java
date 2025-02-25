@@ -13,6 +13,7 @@ public class Main extends Application {
   private List<PlayingCard> hand;
   private HBox cardBox;
   private Text sumText;
+  private Text analysisText;
 
 
 
@@ -37,13 +38,13 @@ public class Main extends Application {
     updateHand();
 
     sumText = new Text("Value of all your cards: " + calculateHandSum());
+    analysisText = new Text(checkHand());
 
     Button dealButton = new Button("Deal new cards");
     dealButton.setOnAction(e -> dealNewHand());
 
 
-
-    root.getChildren().addAll(title, cardBox, sumText, dealButton);
+    root.getChildren().addAll(title, cardBox, sumText, analysisText, dealButton);
 
     Scene scene = new Scene(root, 600, 400);
     stage.setScene(scene);
@@ -69,6 +70,18 @@ public class Main extends Application {
       sum += card.getFace();
     }
     return sum;
+  }
+
+  private String checkHand() {
+    AnalyseHand analyze = new AnalyseHand(hand);
+    int flush = AnalyseHand.isFlush();
+    int straight = AnalyseHand.checkStraight(hand);
+
+    if (flush > 0 && straight > 0) return "You got a Straight Flush!";
+    if (flush > 0) return "You got a Flush!";
+    if (straight > 0) return "You got a Straight!";
+    return "Keep dealing hand to get a Straight or Flush!";
+
   }
 
   public static void main(String[] args) {

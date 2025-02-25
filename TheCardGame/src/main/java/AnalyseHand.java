@@ -3,7 +3,7 @@ import java.util.List;
 
 public class AnalyseHand {
 
-  private static List<PlayingCard> hand;
+  static List<PlayingCard> hand;
 
   // Konstruktør
   public AnalyseHand(List<PlayingCard> hand) {

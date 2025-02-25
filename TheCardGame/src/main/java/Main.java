@@ -1,3 +1,5 @@
+import static javafx.application.Application.launch;
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,9 +15,8 @@ public class Main extends Application {
   private List<PlayingCard> hand;
   private HBox cardBox;
   private Text sumText;
-  private Text analysisText;
-
-
+  private Text flushStraightText;
+  private Text sameOfKindText;
 
   @Override
   public void start(Stage stage) {
@@ -37,14 +38,14 @@ public class Main extends Application {
     cardBox.setAlignment(Pos.CENTER);
     updateHand();
 
-    sumText = new Text("Value of all your cards: " + calculateHandSum());
-    analysisText = new Text(checkHand());
+    sumText = new Text("Sum: " + calculateHandSum());
+    flushStraightText = new Text(checkForFlush());
+    sameOfKindText = new Text(checkForSameKind());
 
-    Button dealButton = new Button("Deal new cards");
+    Button dealButton = new Button("Deal Cards");
     dealButton.setOnAction(e -> dealNewHand());
 
-
-    root.getChildren().addAll(title, cardBox, sumText, analysisText, dealButton);
+    root.getChildren().addAll(title, cardBox, sumText, flushStraightText, sameOfKindText, dealButton);
 
     Scene scene = new Scene(root, 600, 400);
     stage.setScene(scene);
@@ -61,7 +62,9 @@ public class Main extends Application {
   private void dealNewHand() {
     hand = deck.dealHand(5);
     updateHand();
-    sumText.setText("Value of all your cards: " + calculateHandSum());
+    sumText.setText("Sum: " + calculateHandSum());
+    flushStraightText.setText(checkForFlush());
+    sameOfKindText.setText(checkForSameKind());
   }
 
   private int calculateHandSum() {
@@ -72,20 +75,31 @@ public class Main extends Application {
     return sum;
   }
 
-  private String checkHand() {
-    AnalyseHand analyze = new AnalyseHand(hand);
-    int flush = AnalyseHand.isFlush();
+  private String checkForFlush() {
+    AnalyseHand analyse = new AnalyseHand(hand);
+    int flush = AnalyseHand.checkFlush();
     int straight = AnalyseHand.checkStraight(hand);
 
     if (flush > 0 && straight > 0) return "You got a Straight Flush!";
     if (flush > 0) return "You got a Flush!";
     if (straight > 0) return "You got a Straight!";
-    return "Keep dealing hand to get a Straight or Flush!";
+    return "Level Hard: Keep dealing hand to get a Straight or Flush!";
+  }
 
+  private String checkForSameKind() {
+    AnalyseHand analyse = new AnalyseHand(hand);
+
+    if (analyse.isOfAKind(4)==4) {
+      return "You have Four of a Kind!";
+    } else if (analyse.isOfAKind(3)==3) {
+      return "You have Three of a Kind!";
+    } else if (analyse.isOfAKind(2)==2) {
+      return "You have Two of a Kind!";
+    }
+    return "Level Easy: No two, three, or four of the same kind";
   }
 
   public static void main(String[] args) {
     launch(args);
   }
 }
-
